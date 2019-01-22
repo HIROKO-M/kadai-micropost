@@ -23,11 +23,9 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
+    /* 追加　Hiroko */
+    protected $redirectTo = '/';
+    
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'getLogout']);
@@ -62,4 +60,5 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+    
 }
