@@ -4,7 +4,7 @@
     <div class="row">
         <aside class="col-xs-4">
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading">Microposts 
                     <h3 class="panel-title">{{ $user->name }}</h3>
                 </div>
                 <div class="panel-body">
@@ -19,7 +19,7 @@
                 <li><a href="#">Followers</a></li>
             </ul>
             @if (count($microposts) > 0)
-                @include('maicroposts.microposts', ['microposts' => $microposts])
+                @include('microposts.microposts', ['microposts' => $microposts])
             @endif
         </div>
     </div>
