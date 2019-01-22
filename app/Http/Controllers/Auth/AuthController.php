@@ -24,7 +24,7 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /* 追加　Hiroko */
-    protected $redirectTo = '/';
+     protected $redirectTo = '/';
     protected $loginPath = '/login';    //　7.2追加
     
     public function __construct()

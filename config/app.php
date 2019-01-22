@@ -147,6 +147,9 @@ return [
 
         /* Hiroko Add for use library */
         Collective\Html\HtmlServiceProvider::class,
+        
+        /* Hiroko Add for use Gravatar */
+        Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
     ],
 
     /*
@@ -198,6 +201,9 @@ return [
         /* Hiroko Add for use library */
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        
+        /* Hiroko Add for use Gravatar */
+        'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
     ],
 
 ];

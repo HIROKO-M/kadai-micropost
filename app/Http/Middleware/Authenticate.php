@@ -37,9 +37,17 @@ class Authenticate
         if ($this->auth->guest()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('auth/login');
-            }
+            } 
+            else {
+                 /* 修正 Hiroko
+                  * ログインせずに /users などにアクセスした場合には、 
+                  * route('login.get') のログインページにリダイレクトされ、
+                  * ユーザにログインしなければ見られないことを認識させることが
+                  * できます。*/
+            
+                return redirect()->guest(route('login.get'));  // 修正
+            }   
+            
         }
 
         return $next($request);
