@@ -25,6 +25,7 @@ class AuthController extends Controller
 
     /* 追加　Hiroko */
     protected $redirectTo = '/';
+    protected $loginPath = '/login';    //　7.2追加
     
     public function __construct()
     {

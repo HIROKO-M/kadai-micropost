@@ -18,7 +18,11 @@ Route::get('/', function () {
 // ユーザ登録　Add hiroko
 // ->name() はこのルーティングに名前を付けているだけです。
 //　後ほど、 Form や link_to_route() で使用することになる
-
 Route::get('signup', 'Auth\AuthController@getRegister')->name('signup.get');
 Route::post('signup', 'Auth\AuthController@postRegister')->name('signup.post');
+
+// ログイン認証　Add hiroko
+Route::get('login', 'Auth\AuthController@getLogin')->name('login.get');
+Route::post('login', 'Auth\AuthController@postLogin')->name('login.post');
+Route::get('logout', 'Auth\AuthController@getLogout')->name('logout.get');
 
