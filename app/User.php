@@ -99,4 +99,47 @@ class User extends Model implements AuthenticatableContract,
     }
     
     
+    
+    public function favorites()
+    {
+        return $this->belongsToMany(Micropost::class, 'micropost_favorite', 'user_id', 'micropost_id')->withTimestamps();
+    }
+
+    
+    
+        // お気に入り登録（中間テーブルへ保存）メソッドを定義
+    public function favorite_add($microposId){
+        
+        $exist = $this->is_favoriting($microposId);     // 既に登録しているかの確認
+        $its_me = $this->id == $microposId;             // 自分自身ではないかの確認
+        
+        if($exist || $its_me){                      // 既に登録している? or 自分自身?
+            return false;                           // 既に登録していれば何もしない
+        }
+        else{
+            $this->favorites()->attach($microposId);   // 未登録であればフォローする
+            return true;
+        }
+    }
+    
+    // お気に入り削除（中間テーブルから削除）メソッドを定義
+    public function favorite_delete($microposId){
+        
+        $exist = $this->is_favoriting($microposId);      // 既に登録しているかの確認
+        $its_me = $this->id == $microposId;             // 自分自身ではないかの確認
+        
+        if($exist && !$its_me){                     // 既にフォローしている? and それは自分自身でない?
+            $this->favorites()->detach($microposId);   // 既に登録してあれば登録削除
+            return true;
+        }
+        else{
+            return false;                           // 未登録であれば何もしない
+        }
+    }
+    
+    // User がお気に入り登録している micropost(favorites())の中から'micropost_id'が存在する抽出
+    public function is_favoriting($microposId){
+        return $this->favorites()->where('micropost_id', $microposId)->exists();
+    }
+    
 }
