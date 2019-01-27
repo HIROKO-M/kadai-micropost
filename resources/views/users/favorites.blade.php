@@ -20,10 +20,16 @@
                 <li role="presentation" class="{{ Request::is('users/*/followers') ? 'active' : '' }}"><a href="{{ route('users.followers', ['id' => $user->id]) }}">Followers <span class="badge">{{ $count_followers }}</span></a></li>
                 <li role="presentation" class="{{ Request::is('users/*/favorites') ? 'active' : '' }}"><a href="{{ route('users.favorites', ['id' => $user->id]) }}">Favorites <span class="badge">{{ $count_favorites }}</span></a></li>
              </ul>
+
+
+
             @if (count($microposts) > 0)
                 <ul class="media-list">
-                    @foreach ($microposts as $micropost)
+
+                        @foreach ($microposts as $micropost)
                         <?php $user = $micropost->user; ?>
+
+                        @if(Auth::user()->is_favoriting($micropost->id))
                             <li class="media">
                                 <div class="media-left">
                                     <img class="media-object img-rounded" src="{{ Gravatar::src($user->email, 50) }}" alt="">
@@ -36,23 +42,20 @@
                                         <p>{!! nl2br(e($micropost->content)) !!}</p>
                                     </div>
                                     <div>
-                                        @if (Auth::user()->id == $micropost->user_id)
-                                            @include('favorites.favorite_button', ['micropost' => $micropost])
-                                        @endif
                                         
-                                        @if (Auth::user()->id == $micropost->user_id)
-                                            {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
-                                                {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
-                                            {!! Form::close() !!}
-                                        @endif
+                                            @include('favorites.favorite_button', ['micropost' => $micropost])
                                     </div>
                                 </div>
                             </li>
-                    @endforeach
+                        @endif
+
+                        @endforeach
+
                 </ul>
 
                 {!! $microposts->render() !!}
             @endif
+            
         </div>
     </div>
 @endsection
