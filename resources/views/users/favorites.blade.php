@@ -26,7 +26,7 @@
             @if (count($microposts) > 0)
                 <ul class="media-list">
 
-                        @foreach ($microposts as $micropost)
+                    @foreach ($microposts as $micropost)
                         <?php $user = $micropost->user; ?>
 
                         @if(Auth::user()->is_favoriting($micropost->id))
@@ -35,27 +35,22 @@
                                     <img class="media-object img-rounded" src="{{ Gravatar::src($user->email, 50) }}" alt="">
                                 </div>
                                 <div class="media-body">
-                                    <div>
                                         {!! link_to_route('users.show', $user->name, ['id' => $user->id]) !!} <span class="text-muted">posted at {{ $micropost->created_at }}</span>
-                                    </div>
-                                    <div>
-                                        <p>{!! nl2br(e($micropost->content)) !!}</p>
-                                    </div>
-                                    <div>
+                                        <!p>{!! nl2br(e($micropost->content)) !!}</p>
                                         
-                                            @include('favorites.favorite_button', ['micropost' => $micropost])
-                                    </div>
+                                        {!! Form::open(['route' => ['user.favorite_delete', $micropost->id], 'method' => 'delete']) !!}
+                                                    {!! Form::submit('Unfavorite', ['class' => "btn btn-success btn-xs"]) !!}
+                                        {!! Form::close() !!}
+                                         
+                                         
+                                    
                                 </div>
                             </li>
                         @endif
-
-                        @endforeach
-
+                    @endforeach
                 </ul>
-
                 {!! $microposts->render() !!}
             @endif
-            
         </div>
     </div>
 @endsection
